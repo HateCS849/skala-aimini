@@ -1,0 +1,27 @@
+{
+  "run_id": "23e5033af3dd48a0a38d0a902c455865",
+  "source": "actual dashboard form submit",
+  "status": "completed",
+  "budget": 1,
+  "runs": 1,
+  "usage": {
+    "input_tokens": 2066,
+    "output_tokens": 56,
+    "llm_calls": 2,
+    "llm_attempts": 2
+  },
+  "validation": {
+    "verdict": "complete",
+    "requested_tested": true,
+    "experiments": 1,
+    "issues": [],
+    "limitations": []
+  },
+  "comparison": {
+    "before_protected_affected": true,
+    "after_protected_affected": false,
+    "isolation_observed": true,
+    "scope": "동일 설정의 순차 실험입니다. 이 조건에서의 비교이며 모든 장애에 대한 보장은 아닙니다.",
+    "integrity_improved": false
+  }
+}

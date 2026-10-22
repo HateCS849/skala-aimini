@@ -1,0 +1,104 @@
+{
+  "name": "외부 인증 지연 · 장애 전파 점검",
+  "target_url": "http://127.0.0.1:8731/vulnerable",
+  "comparison_url": "http://127.0.0.1:8731/isolated",
+  "users": 20,
+  "pattern": "spike",
+  "baseline_seconds": 3,
+  "fault_seconds": 6,
+  "recovery_seconds": 3,
+  "think_ms": 100,
+  "timeout_seconds": 4,
+  "slo_ms": 1000,
+  "fault_mode": "demo",
+  "control_path": "/__burstguard/control",
+  "external_delay_seconds": 10,
+  "external_status": 200,
+  "pool_size": 10,
+  "pool_wait_seconds": 0.3,
+  "provider_timeout_seconds": 3,
+  "metrics": {
+    "mode": "json",
+    "path": "/__burstguard/metrics",
+    "pool": null
+  },
+  "journeys": [
+    {
+      "name": "Apple 로그인",
+      "weight": 60,
+      "steps": [
+        {
+          "name": "로그인",
+          "method": "POST",
+          "path": "/login",
+          "body": {
+            "user": "test-{{vu}}-{{iteration}}"
+          },
+          "expected_status": [
+            200
+          ],
+          "expect_json": null,
+          "expect_values": {},
+          "extract": {},
+          "extract_headers": {},
+          "bearer_variable": null
+        }
+      ]
+    },
+    {
+      "name": "음식 목록",
+      "weight": 25,
+      "steps": [
+        {
+          "name": "목록",
+          "method": "GET",
+          "path": "/foods",
+          "body": null,
+          "expected_status": [
+            200
+          ],
+          "expect_json": "items",
+          "expect_values": {},
+          "extract": {},
+          "extract_headers": {},
+          "bearer_variable": null
+        }
+      ]
+    },
+    {
+      "name": "음식 검색",
+      "weight": 15,
+      "steps": [
+        {
+          "name": "검색",
+          "method": "GET",
+          "path": "/search?q=kimchi",
+          "body": null,
+          "expected_status": [
+            200
+          ],
+          "expect_json": "items",
+          "expect_values": {},
+          "extract": {},
+          "extract_headers": {},
+          "bearer_variable": null
+        }
+      ]
+    }
+  ],
+  "protected_step": {
+    "name": "보호할 음식 목록",
+    "method": "GET",
+    "path": "/foods",
+    "body": null,
+    "expected_status": [
+      200
+    ],
+    "expect_json": "items",
+    "expect_values": {},
+    "extract": {},
+    "extract_headers": {},
+    "bearer_variable": null
+  },
+  "analysis": "rules"
+}

@@ -1,0 +1,374 @@
+{
+  "provider": "LangSmith RunTree SDK",
+  "delivery": "metadata_export_verified",
+  "cloud_verified": true,
+  "spans": [
+    {
+      "id": "01a1617a-adde-76f1-abc6-802485516db0",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.research",
+      "run_type": "tool",
+      "status": "completed",
+      "elapsed_ms": 11.88
+    },
+    {
+      "id": "01a1617a-adeb-730e-828d-30b728338510",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.planner",
+      "run_type": "llm",
+      "status": "completed",
+      "elapsed_ms": 6715.47
+    },
+    {
+      "id": "01a1617a-c82f-7fdf-b1a1-2b4491d532bc",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.gate",
+      "run_type": "chain",
+      "status": "completed",
+      "elapsed_ms": 3.26
+    },
+    {
+      "id": "01a1617a-c837-7b3a-8d38-c98c4ade9d18",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.executor",
+      "run_type": "tool",
+      "status": "completed",
+      "elapsed_ms": 8720.9
+    },
+    {
+      "id": "01a1617a-ea4a-7543-a308-6e92063712c2",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.validator",
+      "run_type": "llm",
+      "status": "completed",
+      "elapsed_ms": 3531.81
+    },
+    {
+      "id": "01a1617a-f81d-7a19-9b8e-93af21962aa4",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.replan_check",
+      "run_type": "chain",
+      "status": "completed",
+      "elapsed_ms": 1.22
+    },
+    {
+      "id": "01a1617a-f822-7b0c-b1d5-2a5207a300c7",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.planner",
+      "run_type": "llm",
+      "status": "completed",
+      "elapsed_ms": 4075.86
+    },
+    {
+      "id": "01a1617b-0810-733a-84fa-30ea2972f1c7",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.gate",
+      "run_type": "chain",
+      "status": "completed",
+      "elapsed_ms": 3.65
+    },
+    {
+      "id": "01a1617b-081a-718c-ba01-42931d73083e",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.executor",
+      "run_type": "tool",
+      "status": "completed",
+      "elapsed_ms": 9668.07
+    },
+    {
+      "id": "01a1617b-2de0-79b1-a917-ed3110af0b76",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.validator",
+      "run_type": "llm",
+      "status": "completed",
+      "elapsed_ms": 4081.83
+    },
+    {
+      "id": "01a1617b-3dd5-7768-85ee-d23ed9fe26b3",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.replan_check",
+      "run_type": "chain",
+      "status": "completed",
+      "elapsed_ms": 0.78
+    },
+    {
+      "id": "01a1617b-3dd9-7dce-98e9-6889e8aa2198",
+      "parent_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.write",
+      "run_type": "chain",
+      "status": "completed",
+      "elapsed_ms": 0.91
+    }
+  ],
+  "root_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+  "runs": [
+    {
+      "id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "name": "burstguard.supervisor",
+      "run_type": "chain",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": null,
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "start_time": "2026-10-22T02:39:52.080267+00:00",
+      "end_time": "2026-10-22T02:40:29.187413+00:00",
+      "inputs": {
+        "experiment_id": "fcdca7305d0d4560bbcb54fbcbc28637"
+      },
+      "outputs": {
+        "status": "completed",
+        "experiments": 2,
+        "validation": "complete"
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-adde-76f1-abc6-802485516db0",
+      "name": "burstguard.research",
+      "run_type": "tool",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T023952286697Z01a1617a-adde-76f1-abc6-802485516db0",
+      "start_time": "2026-10-22T02:39:52.286697+00:00",
+      "end_time": "2026-10-22T02:39:52.298669+00:00",
+      "inputs": {
+        "attempt": 1
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 0
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-adeb-730e-828d-30b728338510",
+      "name": "burstguard.planner",
+      "run_type": "llm",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T023952299769Z01a1617a-adeb-730e-828d-30b728338510",
+      "start_time": "2026-10-22T02:39:52.299769+00:00",
+      "end_time": "2026-10-22T02:39:59.015301+00:00",
+      "inputs": {
+        "attempt": 1
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 1
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-c82f-7fdf-b1a1-2b4491d532bc",
+      "name": "burstguard.gate",
+      "run_type": "chain",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T023959023241Z01a1617a-c82f-7fdf-b1a1-2b4491d532bc",
+      "start_time": "2026-10-22T02:39:59.023241+00:00",
+      "end_time": "2026-10-22T02:39:59.030767+00:00",
+      "inputs": {
+        "attempt": 1
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 1
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-c837-7b3a-8d38-c98c4ade9d18",
+      "name": "burstguard.executor",
+      "run_type": "tool",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T023959031360Z01a1617a-c837-7b3a-8d38-c98c4ade9d18",
+      "start_time": "2026-10-22T02:39:59.031360+00:00",
+      "end_time": "2026-10-22T02:40:07.752332+00:00",
+      "inputs": {
+        "attempt": 1
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 1
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-ea4a-7543-a308-6e92063712c2",
+      "name": "burstguard.validator",
+      "run_type": "llm",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024007754534Z01a1617a-ea4a-7543-a308-6e92063712c2",
+      "start_time": "2026-10-22T02:40:07.754534+00:00",
+      "end_time": "2026-10-22T02:40:11.286727+00:00",
+      "inputs": {
+        "attempt": 2
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 2
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-f81d-7a19-9b8e-93af21962aa4",
+      "name": "burstguard.replan_check",
+      "run_type": "chain",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024011293107Z01a1617a-f81d-7a19-9b8e-93af21962aa4",
+      "start_time": "2026-10-22T02:40:11.293107+00:00",
+      "end_time": "2026-10-22T02:40:11.295502+00:00",
+      "inputs": {
+        "attempt": 2
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 2
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617a-f822-7b0c-b1d5-2a5207a300c7",
+      "name": "burstguard.planner",
+      "run_type": "llm",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024011298107Z01a1617a-f822-7b0c-b1d5-2a5207a300c7",
+      "start_time": "2026-10-22T02:40:11.298107+00:00",
+      "end_time": "2026-10-22T02:40:15.374064+00:00",
+      "inputs": {
+        "attempt": 2
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 3
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617b-0810-733a-84fa-30ea2972f1c7",
+      "name": "burstguard.gate",
+      "run_type": "chain",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024015376420Z01a1617b-0810-733a-84fa-30ea2972f1c7",
+      "start_time": "2026-10-22T02:40:15.376420+00:00",
+      "end_time": "2026-10-22T02:40:15.384987+00:00",
+      "inputs": {
+        "attempt": 2
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 3
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617b-081a-718c-ba01-42931d73083e",
+      "name": "burstguard.executor",
+      "run_type": "tool",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024015386003Z01a1617b-081a-718c-ba01-42931d73083e",
+      "start_time": "2026-10-22T02:40:15.386003+00:00",
+      "end_time": "2026-10-22T02:40:25.054190+00:00",
+      "inputs": {
+        "attempt": 2
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 3
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617b-2de0-79b1-a917-ed3110af0b76",
+      "name": "burstguard.validator",
+      "run_type": "llm",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024025056201Z01a1617b-2de0-79b1-a917-ed3110af0b76",
+      "start_time": "2026-10-22T02:40:25.056201+00:00",
+      "end_time": "2026-10-22T02:40:29.139667+00:00",
+      "inputs": {
+        "attempt": 3
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 4
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617b-3dd5-7768-85ee-d23ed9fe26b3",
+      "name": "burstguard.replan_check",
+      "run_type": "chain",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024029141457Z01a1617b-3dd5-7768-85ee-d23ed9fe26b3",
+      "start_time": "2026-10-22T02:40:29.141457+00:00",
+      "end_time": "2026-10-22T02:40:29.142568+00:00",
+      "inputs": {
+        "attempt": 3
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 4
+      },
+      "error": null
+    },
+    {
+      "id": "01a1617b-3dd9-7dce-98e9-6889e8aa2198",
+      "name": "burstguard.write",
+      "run_type": "chain",
+      "trace_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "parent_run_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+      "dotted_order": "20261022T023952080267Z01a1617a-ad10-7251-8fca-7667448a9d5a.20261022T024029145176Z01a1617b-3dd9-7dce-98e9-6889e8aa2198",
+      "start_time": "2026-10-22T02:40:29.145176+00:00",
+      "end_time": "2026-10-22T02:40:29.146112+00:00",
+      "inputs": {
+        "attempt": 3
+      },
+      "outputs": {
+        "status": "completed",
+        "llm_calls": 4
+      },
+      "error": null
+    }
+  ],
+  "finished": true,
+  "cloud": {
+    "status": "verified",
+    "synthetic_only": true,
+    "delivery_mode": "completed_run_metadata_export",
+    "project": "burstguard-cloud-verification",
+    "cloud_root_id": "f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3",
+    "source_root_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+    "verification_nonce": "e80e71e0-88c8-4d5e-bec7-6af43d895e9d",
+    "url": "https://smith.langchain.com/o/9ff2f04c-2b5a-44fc-9d69-8a126e701d1c/projects/p/b879911d-c08e-4209-8695-023863cea9cf/r/f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3?trace_id=f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3&start_time=2026-10-22T02:39:52.080267",
+    "readback": {
+      "verified": true,
+      "expected": 13,
+      "received": 13,
+      "missing_ids": [],
+      "invalid_ids": []
+    },
+    "completed_llm_spans": 4,
+    "completed_tool_spans": 3,
+    "span_names": [
+      "burstguard.executor",
+      "burstguard.gate",
+      "burstguard.planner",
+      "burstguard.replan_check",
+      "burstguard.research",
+      "burstguard.supervisor",
+      "burstguard.validator",
+      "burstguard.write"
+    ],
+    "checked_at": "2026-10-22T02:41:08.479274+00:00",
+    "scope": "실제 합성 메인 실행의 역할·완료 상태·시간·집계 메타데이터를 내보내고 모든 ID·부모 관계·입출력을 클라우드에서 대조했습니다. 첨부·프롬프트 원문이나 인증은 전송하지 않습니다.",
+    "source_experiment_id": "fcdca7305d0d4560bbcb54fbcbc28637"
+  }
+}

@@ -1,0 +1,319 @@
+{
+  "complete": true,
+  "fixtures": 3,
+  "repeats": 3,
+  "fixture_file": "resilience-agent-context-fixtures-20261022.json",
+  "fixture_sha256": "e0987d574a7672f3d8b14250dfeb34f79cc17a4634581b488442703c9244011e",
+  "scope": "New main planner, identical frozen goals/candidate IDs/evidence/model/schema, alternating paired order. Compact removes repeated full runbook and truncates reference excerpts. Valid ID selection is not diagnostic accuracy or financial cost.",
+  "summary": {
+    "full": {
+      "calls": 9,
+      "valid_plans": 9,
+      "mean_ms": 2754.71,
+      "mean_input_tokens": 1636,
+      "mean_output_tokens": 24.33
+    },
+    "compact": {
+      "calls": 9,
+      "valid_plans": 9,
+      "mean_ms": 1557.11,
+      "mean_input_tokens": 822.67,
+      "mean_output_tokens": 24
+    },
+    "same_scenario_pairs": 3,
+    "input_token_reduction_percent": 49.71
+  },
+  "results": [
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1636,
+      "output_tokens": 23,
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "fixture": 0,
+      "mode": "full",
+      "ms": 4041.63
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "requested",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 822,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "fixture": 0,
+      "mode": "compact",
+      "ms": 1526.29
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 825,
+      "output_tokens": 23,
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "fixture": 1,
+      "mode": "compact",
+      "ms": 2521.7
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1639,
+      "output_tokens": 26,
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "fixture": 1,
+      "mode": "full",
+      "ms": 3249.31
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "requested",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1633,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "fixture": 2,
+      "mode": "full",
+      "ms": 4019.74
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "repeat",
+        "reference_ids": [
+          "ref0",
+          "ref1"
+        ]
+      },
+      "input_tokens": 821,
+      "output_tokens": 25,
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "fixture": 2,
+      "mode": "compact",
+      "ms": 1658.2
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "requested",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 822,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "repeat": 2,
+      "fixture": 0,
+      "mode": "compact",
+      "ms": 1242.43
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1636,
+      "output_tokens": 23,
+      "model": "qwen3:8b",
+      "repeat": 2,
+      "fixture": 0,
+      "mode": "full",
+      "ms": 3017.2
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1639,
+      "output_tokens": 26,
+      "model": "qwen3:8b",
+      "repeat": 2,
+      "fixture": 1,
+      "mode": "full",
+      "ms": 1497.19
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 825,
+      "output_tokens": 23,
+      "model": "qwen3:8b",
+      "repeat": 2,
+      "fixture": 1,
+      "mode": "compact",
+      "ms": 1437.26
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "repeat",
+        "reference_ids": [
+          "ref0",
+          "ref1"
+        ]
+      },
+      "input_tokens": 821,
+      "output_tokens": 25,
+      "model": "qwen3:8b",
+      "repeat": 2,
+      "fixture": 2,
+      "mode": "compact",
+      "ms": 1353.42
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "requested",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1633,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "repeat": 2,
+      "fixture": 2,
+      "mode": "full",
+      "ms": 3134.01
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1636,
+      "output_tokens": 23,
+      "model": "qwen3:8b",
+      "repeat": 3,
+      "fixture": 0,
+      "mode": "full",
+      "ms": 1341.27
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "requested",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 822,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "repeat": 3,
+      "fixture": 0,
+      "mode": "compact",
+      "ms": 1533.63
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 825,
+      "output_tokens": 23,
+      "model": "qwen3:8b",
+      "repeat": 3,
+      "fixture": 1,
+      "mode": "compact",
+      "ms": 1143.45
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "reduced_load",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1639,
+      "output_tokens": 26,
+      "model": "qwen3:8b",
+      "repeat": 3,
+      "fixture": 1,
+      "mode": "full",
+      "ms": 3169.9
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "requested",
+        "reference_ids": [
+          "ref0"
+        ]
+      },
+      "input_tokens": 1633,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "repeat": 3,
+      "fixture": 2,
+      "mode": "full",
+      "ms": 1322.12
+    },
+    {
+      "valid": true,
+      "plan": {
+        "scenario_id": "repeat",
+        "reference_ids": [
+          "ref0",
+          "ref1"
+        ]
+      },
+      "input_tokens": 821,
+      "output_tokens": 25,
+      "model": "qwen3:8b",
+      "repeat": 3,
+      "fixture": 2,
+      "mode": "compact",
+      "ms": 1597.61
+    }
+  ]
+}

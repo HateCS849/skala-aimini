@@ -1,0 +1,32 @@
+{
+  "status": "verified",
+  "synthetic_only": true,
+  "delivery_mode": "completed_run_metadata_export",
+  "project": "burstguard-cloud-verification",
+  "cloud_root_id": "f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3",
+  "source_root_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+  "verification_nonce": "e80e71e0-88c8-4d5e-bec7-6af43d895e9d",
+  "url": "https://smith.langchain.com/o/9ff2f04c-2b5a-44fc-9d69-8a126e701d1c/projects/p/b879911d-c08e-4209-8695-023863cea9cf/r/f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3?trace_id=f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3&start_time=2026-10-22T02:39:52.080267",
+  "readback": {
+    "verified": true,
+    "expected": 13,
+    "received": 13,
+    "missing_ids": [],
+    "invalid_ids": []
+  },
+  "completed_llm_spans": 4,
+  "completed_tool_spans": 3,
+  "span_names": [
+    "burstguard.executor",
+    "burstguard.gate",
+    "burstguard.planner",
+    "burstguard.replan_check",
+    "burstguard.research",
+    "burstguard.supervisor",
+    "burstguard.validator",
+    "burstguard.write"
+  ],
+  "checked_at": "2026-10-22T02:41:08.479274+00:00",
+  "scope": "실제 합성 메인 실행의 역할·완료 상태·시간·집계 메타데이터를 내보내고 모든 ID·부모 관계·입출력을 클라우드에서 대조했습니다. 첨부·프롬프트 원문이나 인증은 전송하지 않습니다.",
+  "source_experiment_id": "fcdca7305d0d4560bbcb54fbcbc28637"
+}

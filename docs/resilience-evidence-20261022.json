@@ -1,0 +1,4286 @@
+{
+  "id": "162e74b26dd047ab932bb44bf600b927",
+  "name": "외부 인증 지연 · 장애 전파 점검",
+  "status": "completed",
+  "stage": "completed",
+  "created_at": "2026-10-22T01:19:43.093825+00:00",
+  "config": {
+    "name": "외부 인증 지연 · 장애 전파 점검",
+    "target_url": "http://127.0.0.1:8731/vulnerable",
+    "comparison_url": "http://127.0.0.1:8731/isolated",
+    "users": 70,
+    "pattern": "spike",
+    "baseline_seconds": 3.0,
+    "fault_seconds": 6.0,
+    "recovery_seconds": 3.0,
+    "think_ms": 100,
+    "timeout_seconds": 4.0,
+    "slo_ms": 1000.0,
+    "fault_mode": "demo",
+    "control_path": "/__burstguard/control",
+    "external_delay_seconds": 10.0,
+    "external_status": 200,
+    "pool_size": 10,
+    "pool_wait_seconds": 0.3,
+    "provider_timeout_seconds": 3.0,
+    "metrics": {
+      "mode": "json",
+      "path": "/__burstguard/metrics",
+      "pool": null
+    },
+    "journeys": [
+      {
+        "name": "Apple 로그인",
+        "weight": 60,
+        "steps": [
+          {
+            "name": "로그인",
+            "method": "POST",
+            "path": "/login",
+            "body": {
+              "user": "test-{{vu}}-{{iteration}}"
+            },
+            "expected_status": [
+              200
+            ],
+            "expect_json": null,
+            "expect_values": {},
+            "extract": {},
+            "extract_headers": {},
+            "bearer_variable": null
+          }
+        ]
+      },
+      {
+        "name": "음식 목록",
+        "weight": 25,
+        "steps": [
+          {
+            "name": "목록",
+            "method": "GET",
+            "path": "/foods",
+            "body": null,
+            "expected_status": [
+              200
+            ],
+            "expect_json": "items",
+            "expect_values": {},
+            "extract": {},
+            "extract_headers": {},
+            "bearer_variable": null
+          }
+        ]
+      },
+      {
+        "name": "음식 검색",
+        "weight": 15,
+        "steps": [
+          {
+            "name": "검색",
+            "method": "GET",
+            "path": "/search?q=kimchi",
+            "body": null,
+            "expected_status": [
+              200
+            ],
+            "expect_json": "items",
+            "expect_values": {},
+            "extract": {},
+            "extract_headers": {},
+            "bearer_variable": null
+          }
+        ]
+      }
+    ],
+    "protected_step": {
+      "name": "보호할 음식 목록",
+      "method": "GET",
+      "path": "/foods",
+      "body": null,
+      "expected_status": [
+        200
+      ],
+      "expect_json": "items",
+      "expect_values": {},
+      "extract": {},
+      "extract_headers": {},
+      "bearer_variable": null
+    },
+    "analysis": "ollama"
+  },
+  "targets": [
+    {
+      "label": "변경 전",
+      "url": "http://127.0.0.1:8731/vulnerable",
+      "phases": [
+        {
+          "name": "baseline",
+          "duration_seconds": 3.0,
+          "status": "completed",
+          "metrics": [
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.01
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.26
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.52
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.77
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.02
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.28
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.53
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.79
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.04
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.29
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.55
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.8
+            }
+          ],
+          "series": [
+            {
+              "second": 0,
+              "requests": 20,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 6.55,
+              "p95_ms": 9.52,
+              "rps": 20.0,
+              "statuses": {
+                "200": 20
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 1,
+              "requests": 18,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.67,
+              "p95_ms": 9.41,
+              "rps": 18.0,
+              "statuses": {
+                "200": 18
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 2,
+              "requests": 19,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 6.64,
+              "p95_ms": 9.47,
+              "rps": 19.0,
+              "statuses": {
+                "200": 19
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          ],
+          "by_journey": {
+            "Apple 로그인": {
+              "requests": 19,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 4.31,
+              "p95_ms": 7.73,
+              "rps": 6.14,
+              "statuses": {
+                "200": 19
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "보호 기능 (독립 관찰)": {
+              "requests": 28,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.55,
+              "p95_ms": 9.47,
+              "rps": 9.05,
+              "statuses": {
+                "200": 28
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 목록": {
+              "requests": 7,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.6,
+              "p95_ms": 9.52,
+              "rps": 2.26,
+              "statuses": {
+                "200": 7
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 검색": {
+              "requests": 3,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.14,
+              "p95_ms": 8.42,
+              "rps": 0.97,
+              "statuses": {
+                "200": 3
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          },
+          "total": {
+            "requests": 57,
+            "failures": 0,
+            "error_rate": 0.0,
+            "p50_ms": 7.27,
+            "p95_ms": 9.47,
+            "rps": 18.42,
+            "statuses": {
+              "200": 57
+            },
+            "functional_failures": 0,
+            "timeouts": 0
+          },
+          "actual_seconds": 3.09,
+          "request_budget_hit": false,
+          "failures": [],
+          "configured_users": 70,
+          "active_users": 2
+        },
+        {
+          "name": "fault",
+          "duration_seconds": 6.0,
+          "status": "completed",
+          "metrics": [
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.21
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 0,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.47
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 56,
+              "pool_timeouts": 60,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.72
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 4,
+              "pool_timeouts": 116,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.98
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 120,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.23
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 56,
+              "pool_timeouts": 180,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.49
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 50,
+              "pool_timeouts": 190,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.74
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 240,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.99
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 12,
+              "pool_timeouts": 300,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.25
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 300,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.5
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 360,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.76
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 47,
+              "pool_timeouts": 373,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 3.01
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 420,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 3.27
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 13,
+              "pool_timeouts": 480,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 3.53
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 48,
+              "pool_timeouts": 492,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 3.78
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 60,
+              "pool_timeouts": 540,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 4.04
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 12,
+              "pool_timeouts": 600,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 4.3
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 70,
+              "pool_timeouts": 600,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 4.55
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 70,
+              "pool_timeouts": 670,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 4.8
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 4,
+              "pool_timeouts": 736,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 5.07
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 70,
+              "pool_timeouts": 740,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 5.33
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 66,
+              "pool_timeouts": 810,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 5.59
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 58,
+              "pool_timeouts": 822,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 5.84
+            }
+          ],
+          "series": [
+            {
+              "second": 0,
+              "requests": 120,
+              "failures": 116,
+              "error_rate": 0.9667,
+              "p50_ms": 306.65,
+              "p95_ms": 424.22,
+              "rps": 120.0,
+              "statuses": {
+                "200": 4,
+                "503": 116
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 1,
+              "requests": 124,
+              "failures": 124,
+              "error_rate": 1.0,
+              "p50_ms": 303.23,
+              "p95_ms": 305.28,
+              "rps": 124.0,
+              "statuses": {
+                "503": 124
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 2,
+              "requests": 132,
+              "failures": 132,
+              "error_rate": 1.0,
+              "p50_ms": 303.81,
+              "p95_ms": 306.0,
+              "rps": 132.0,
+              "statuses": {
+                "503": 132
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 3,
+              "requests": 168,
+              "failures": 168,
+              "error_rate": 1.0,
+              "p50_ms": 309.59,
+              "p95_ms": 314.48,
+              "rps": 168.0,
+              "statuses": {
+                "503": 168
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 4,
+              "requests": 152,
+              "failures": 152,
+              "error_rate": 1.0,
+              "p50_ms": 302.91,
+              "p95_ms": 4144.74,
+              "rps": 152.0,
+              "statuses": {
+                "503": 142,
+                "timeout": 10
+              },
+              "functional_failures": 0,
+              "timeouts": 10
+            },
+            {
+              "second": 5,
+              "requests": 198,
+              "failures": 198,
+              "error_rate": 1.0,
+              "p50_ms": 307.38,
+              "p95_ms": 313.37,
+              "rps": 198.0,
+              "statuses": {
+                "503": 198
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 6,
+              "requests": 70,
+              "failures": 70,
+              "error_rate": 1.0,
+              "p50_ms": 301.96,
+              "p95_ms": 306.55,
+              "rps": 70.0,
+              "statuses": {
+                "503": 70
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          ],
+          "by_journey": {
+            "보호 기능 (독립 관찰)": {
+              "requests": 16,
+              "failures": 15,
+              "error_rate": 0.9375,
+              "p50_ms": 303.59,
+              "p95_ms": 311.13,
+              "rps": 2.5,
+              "statuses": {
+                "200": 1,
+                "503": 15
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 검색": {
+              "requests": 147,
+              "failures": 146,
+              "error_rate": 0.9932,
+              "p50_ms": 304.45,
+              "p95_ms": 355.78,
+              "rps": 22.98,
+              "statuses": {
+                "200": 1,
+                "503": 146
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 목록": {
+              "requests": 241,
+              "failures": 239,
+              "error_rate": 0.9917,
+              "p50_ms": 304.31,
+              "p95_ms": 314.78,
+              "rps": 37.68,
+              "statuses": {
+                "200": 2,
+                "503": 239
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "Apple 로그인": {
+              "requests": 560,
+              "failures": 560,
+              "error_rate": 1.0,
+              "p50_ms": 304.7,
+              "p95_ms": 381.43,
+              "rps": 87.56,
+              "statuses": {
+                "503": 550,
+                "timeout": 10
+              },
+              "functional_failures": 0,
+              "timeouts": 10
+            }
+          },
+          "total": {
+            "requests": 964,
+            "failures": 960,
+            "error_rate": 0.9959,
+            "p50_ms": 304.58,
+            "p95_ms": 367.52,
+            "rps": 150.72,
+            "statuses": {
+              "200": 4,
+              "503": 950,
+              "timeout": 10
+            },
+            "functional_failures": 0,
+            "timeouts": 10
+          },
+          "actual_seconds": 6.4,
+          "request_budget_hit": false,
+          "failures": [
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 437.93,
+              "second": 0.516,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 437.56,
+              "second": 0.519,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 435.12,
+              "second": 0.519,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 432.67,
+              "second": 0.519,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 428.69,
+              "second": 0.519,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 426.46,
+              "second": 0.52,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 424.22,
+              "second": 0.52,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 422.92,
+              "second": 0.521,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 419.31,
+              "second": 0.521,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 417.71,
+              "second": 0.522,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 418.5,
+              "second": 0.525,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 416.33,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 414.24,
+              "second": 0.525,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 412.28,
+              "second": 0.525,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 410.25,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 407.91,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 405.11,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 403.05,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 401.07,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 399.05,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 396.91,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 394.87,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 392.9,
+              "second": 0.525,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 393.67,
+              "second": 0.528,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 391.71,
+              "second": 0.528,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 389.65,
+              "second": 0.528,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 387.65,
+              "second": 0.528,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 385.66,
+              "second": 0.528,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 383.57,
+              "second": 0.528,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 381.43,
+              "second": 0.528,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 379.42,
+              "second": 0.528,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 377.49,
+              "second": 0.529,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 375.58,
+              "second": 0.529,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 373.5,
+              "second": 0.529,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 371.53,
+              "second": 0.529,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 369.53,
+              "second": 0.529,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 367.52,
+              "second": 0.529,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 368.18,
+              "second": 0.531,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 366.18,
+              "second": 0.532,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 363.75,
+              "second": 0.532,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 359.81,
+              "second": 0.532,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 357.8,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 355.78,
+              "second": 0.532,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 352.99,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 350.76,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 348.6,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 346.48,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 344.32,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 342.2,
+              "second": 0.532,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 340.2,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 338.1,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 335.95,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 333.93,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 331.98,
+              "second": 0.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 329.94,
+              "second": 0.532,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 327.01,
+              "second": 0.532,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 302.88,
+              "second": 0.622,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.46,
+              "second": 0.623,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.27,
+              "second": 0.623,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.65,
+              "second": 0.623,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.41,
+              "second": 0.92,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.69,
+              "second": 0.923,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.37,
+              "second": 0.924,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.28,
+              "second": 0.924,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.42,
+              "second": 0.925,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.19,
+              "second": 0.925,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.08,
+              "second": 0.925,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 302.95,
+              "second": 0.926,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 302.82,
+              "second": 0.926,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 302.61,
+              "second": 0.926,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.16,
+              "second": 0.93,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.26,
+              "second": 0.93,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.18,
+              "second": 0.931,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.14,
+              "second": 0.931,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.39,
+              "second": 0.931,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.29,
+              "second": 0.931,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.35,
+              "second": 0.931,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.36,
+              "second": 0.932,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.14,
+              "second": 0.932,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.19,
+              "second": 0.932,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.2,
+              "second": 0.933,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.4,
+              "second": 0.934,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.52,
+              "second": 0.934,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.66,
+              "second": 0.934,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.67,
+              "second": 0.934,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.31,
+              "second": 0.936,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.47,
+              "second": 0.936,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.6,
+              "second": 0.936,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.72,
+              "second": 0.936,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.02,
+              "second": 0.937,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.96,
+              "second": 0.937,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.28,
+              "second": 0.937,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.2,
+              "second": 0.937,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.79,
+              "second": 0.938,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.72,
+              "second": 0.938,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.65,
+              "second": 0.938,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 306.56,
+              "second": 0.938,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.24,
+              "second": 0.939,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.14,
+              "second": 0.939,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 305.44,
+              "second": 0.939,
+              "journey": "음식 검색",
+              "step": "검색",
+              "canary": false
+            }
+          ],
+          "configured_users": 70,
+          "active_users": 70
+        },
+        {
+          "name": "recovery",
+          "duration_seconds": 3.0,
+          "status": "completed",
+          "metrics": [
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 950,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.06
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 950,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.31
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 952,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.57
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 954,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 0.82
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 954,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.08
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 956,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.33
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 958,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.59
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 958,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 1.84
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 960,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.1
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 960,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.35
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 2,
+              "pool_timeouts": 962,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.61
+            },
+            {
+              "available": true,
+              "pool_active": 10,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 964,
+              "external_inflight": 10,
+              "source": "application-json",
+              "second": 2.86
+            }
+          ],
+          "series": [
+            {
+              "second": 0,
+              "requests": 4,
+              "failures": 4,
+              "error_rate": 1.0,
+              "p50_ms": 304.59,
+              "p95_ms": 346.83,
+              "rps": 4.0,
+              "statuses": {
+                "503": 4
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 1,
+              "requests": 6,
+              "failures": 6,
+              "error_rate": 1.0,
+              "p50_ms": 304.29,
+              "p95_ms": 304.43,
+              "rps": 6.0,
+              "statuses": {
+                "503": 6
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 2,
+              "requests": 4,
+              "failures": 4,
+              "error_rate": 1.0,
+              "p50_ms": 303.26,
+              "p95_ms": 303.89,
+              "rps": 4.0,
+              "statuses": {
+                "503": 4
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 3,
+              "requests": 2,
+              "failures": 2,
+              "error_rate": 1.0,
+              "p50_ms": 303.98,
+              "p95_ms": 304.26,
+              "rps": 2.0,
+              "statuses": {
+                "503": 2
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          ],
+          "by_journey": {
+            "보호 기능 (독립 관찰)": {
+              "requests": 8,
+              "failures": 8,
+              "error_rate": 1.0,
+              "p50_ms": 304.26,
+              "p95_ms": 346.83,
+              "rps": 2.43,
+              "statuses": {
+                "503": 8
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "Apple 로그인": {
+              "requests": 4,
+              "failures": 4,
+              "error_rate": 1.0,
+              "p50_ms": 303.86,
+              "p95_ms": 307.89,
+              "rps": 1.21,
+              "statuses": {
+                "503": 4
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 목록": {
+              "requests": 4,
+              "failures": 4,
+              "error_rate": 1.0,
+              "p50_ms": 303.98,
+              "p95_ms": 304.38,
+              "rps": 1.21,
+              "statuses": {
+                "503": 4
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          },
+          "total": {
+            "requests": 16,
+            "failures": 16,
+            "error_rate": 1.0,
+            "p50_ms": 304.26,
+            "p95_ms": 346.83,
+            "rps": 4.85,
+            "statuses": {
+              "503": 16
+            },
+            "functional_failures": 0,
+            "timeouts": 0
+          },
+          "actual_seconds": 3.3,
+          "request_budget_hit": false,
+          "failures": [
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 346.83,
+              "second": 0.361,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 307.89,
+              "second": 0.362,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.59,
+              "second": 0.767,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.38,
+              "second": 0.768,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.41,
+              "second": 1.173,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.34,
+              "second": 1.173,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.43,
+              "second": 1.579,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.29,
+              "second": 1.579,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.6,
+              "second": 1.983,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.5,
+              "second": 1.984,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.89,
+              "second": 2.388,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.86,
+              "second": 2.389,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.26,
+              "second": 2.792,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.12,
+              "second": 2.793,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 304.26,
+              "second": 3.197,
+              "journey": "보호 기능 (독립 관찰)",
+              "step": "보호할 음식 목록",
+              "canary": true
+            },
+            {
+              "ok": false,
+              "status": 503,
+              "reason": "unexpected_status",
+              "ms": 303.98,
+              "second": 3.197,
+              "journey": "음식 목록",
+              "step": "목록",
+              "canary": false
+            }
+          ],
+          "configured_users": 70,
+          "active_users": 2
+        }
+      ],
+      "fault_restore": "ok"
+    },
+    {
+      "label": "변경 후",
+      "url": "http://127.0.0.1:8731/isolated",
+      "phases": [
+        {
+          "name": "baseline",
+          "duration_seconds": 3.0,
+          "status": "completed",
+          "metrics": [
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.02
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.27
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.53
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.78
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.04
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.3
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.56
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 1.81
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.06
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.32
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.58
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 2.83
+            }
+          ],
+          "series": [
+            {
+              "second": 0,
+              "requests": 19,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.56,
+              "p95_ms": 11.18,
+              "rps": 19.0,
+              "statuses": {
+                "200": 19
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 1,
+              "requests": 19,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.91,
+              "p95_ms": 10.78,
+              "rps": 19.0,
+              "statuses": {
+                "200": 19
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 2,
+              "requests": 18,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.16,
+              "p95_ms": 49.82,
+              "rps": 18.0,
+              "statuses": {
+                "200": 18
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          ],
+          "by_journey": {
+            "Apple 로그인": {
+              "requests": 18,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 5.19,
+              "p95_ms": 49.82,
+              "rps": 5.84,
+              "statuses": {
+                "200": 18
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "보호 기능 (독립 관찰)": {
+              "requests": 28,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.91,
+              "p95_ms": 11.18,
+              "rps": 9.08,
+              "statuses": {
+                "200": 28
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 목록": {
+              "requests": 7,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.79,
+              "p95_ms": 9.8,
+              "rps": 2.27,
+              "statuses": {
+                "200": 7
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 검색": {
+              "requests": 3,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 9.01,
+              "p95_ms": 10.78,
+              "rps": 0.97,
+              "statuses": {
+                "200": 3
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          },
+          "total": {
+            "requests": 56,
+            "failures": 0,
+            "error_rate": 0.0,
+            "p50_ms": 7.6,
+            "p95_ms": 11.18,
+            "rps": 18.17,
+            "statuses": {
+              "200": 56
+            },
+            "functional_failures": 0,
+            "timeouts": 0
+          },
+          "actual_seconds": 3.08,
+          "request_budget_hit": false,
+          "failures": [],
+          "configured_users": 70,
+          "active_users": 2
+        },
+        {
+          "name": "fault",
+          "duration_seconds": 6.0,
+          "status": "completed",
+          "metrics": [
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 0,
+              "source": "application-json",
+              "second": 0.19
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 64,
+              "source": "application-json",
+              "second": 0.44
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 68,
+              "source": "application-json",
+              "second": 0.69
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 0.95
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 1.21
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 1.46
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 1.71
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 1.97
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 2.23
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 2.48
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 2.74
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 2.99
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 69,
+              "source": "application-json",
+              "second": 3.25
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 111,
+              "source": "application-json",
+              "second": 3.5
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 135,
+              "source": "application-json",
+              "second": 3.75
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 137,
+              "source": "application-json",
+              "second": 4.01
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 4.26
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 4.52
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 4.78
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 5.03
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 5.29
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 5.54
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 5.8
+            }
+          ],
+          "series": [
+            {
+              "second": 0,
+              "requests": 50,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 9.27,
+              "p95_ms": 187.02,
+              "rps": 50.0,
+              "statuses": {
+                "200": 50
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 1,
+              "requests": 9,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.93,
+              "p95_ms": 11.02,
+              "rps": 9.0,
+              "statuses": {
+                "200": 9
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 2,
+              "requests": 9,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.78,
+              "p95_ms": 9.93,
+              "rps": 9.0,
+              "statuses": {
+                "200": 9
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 3,
+              "requests": 127,
+              "failures": 69,
+              "error_rate": 0.5433,
+              "p50_ms": 3004.97,
+              "p95_ms": 3188.74,
+              "rps": 127.0,
+              "statuses": {
+                "200": 58,
+                "504": 69
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 4,
+              "requests": 9,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 9.15,
+              "p95_ms": 9.43,
+              "rps": 9.0,
+              "statuses": {
+                "200": 9
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 5,
+              "requests": 9,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.22,
+              "p95_ms": 8.88,
+              "rps": 9.0,
+              "statuses": {
+                "200": 9
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 6,
+              "requests": 68,
+              "failures": 68,
+              "error_rate": 1.0,
+              "p50_ms": 3007.97,
+              "p95_ms": 3017.57,
+              "rps": 68.0,
+              "statuses": {
+                "504": 68
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 7,
+              "requests": 1,
+              "failures": 1,
+              "error_rate": 1.0,
+              "p50_ms": 3006.8,
+              "p95_ms": 3006.8,
+              "rps": 1.0,
+              "statuses": {
+                "504": 1
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          ],
+          "by_journey": {
+            "보호 기능 (독립 관찰)": {
+              "requests": 53,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.43,
+              "p95_ms": 11.02,
+              "rps": 7.38,
+              "statuses": {
+                "200": 53
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 검색": {
+              "requests": 39,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.47,
+              "p95_ms": 162.65,
+              "rps": 5.43,
+              "statuses": {
+                "200": 39
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 목록": {
+              "requests": 52,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.36,
+              "p95_ms": 154.02,
+              "rps": 7.24,
+              "statuses": {
+                "200": 52
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "Apple 로그인": {
+              "requests": 138,
+              "failures": 138,
+              "error_rate": 1.0,
+              "p50_ms": 3015.29,
+              "p95_ms": 3188.74,
+              "rps": 19.22,
+              "statuses": {
+                "504": 138
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          },
+          "total": {
+            "requests": 282,
+            "failures": 138,
+            "error_rate": 0.4894,
+            "p50_ms": 184.72,
+            "p95_ms": 3167.5,
+            "rps": 39.28,
+            "statuses": {
+              "200": 144,
+              "504": 138
+            },
+            "functional_failures": 0,
+            "timeouts": 0
+          },
+          "actual_seconds": 7.18,
+          "request_budget_hit": false,
+          "failures": [
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3201.3,
+              "second": 3.212,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3148.23,
+              "second": 3.215,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3136.01,
+              "second": 3.216,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3191.02,
+              "second": 3.216,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3180.51,
+              "second": 3.217,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3126.78,
+              "second": 3.218,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3190.34,
+              "second": 3.218,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3188.49,
+              "second": 3.219,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3104.01,
+              "second": 3.219,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3133.28,
+              "second": 3.22,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3179.72,
+              "second": 3.22,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3188.74,
+              "second": 3.221,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3078.79,
+              "second": 3.221,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3101.9,
+              "second": 3.222,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3097.25,
+              "second": 3.222,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3108.62,
+              "second": 3.222,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3146.65,
+              "second": 3.223,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3078.46,
+              "second": 3.223,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3173.83,
+              "second": 3.223,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3189.0,
+              "second": 3.224,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3095.08,
+              "second": 3.224,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3208.35,
+              "second": 3.224,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3142.28,
+              "second": 3.225,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3123.12,
+              "second": 3.225,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3182.01,
+              "second": 3.225,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3078.52,
+              "second": 3.225,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3147.14,
+              "second": 3.225,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3167.5,
+              "second": 3.226,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3141.36,
+              "second": 3.226,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3078.05,
+              "second": 3.227,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3107.33,
+              "second": 3.229,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3140.48,
+              "second": 3.229,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3122.63,
+              "second": 3.229,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3078.5,
+              "second": 3.23,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3103.33,
+              "second": 3.23,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3136.28,
+              "second": 3.23,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3072.78,
+              "second": 3.23,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3125.98,
+              "second": 3.231,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3093.58,
+              "second": 3.231,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3068.41,
+              "second": 3.231,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3120.39,
+              "second": 3.231,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3065.75,
+              "second": 3.231,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3180.01,
+              "second": 3.232,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3062.23,
+              "second": 3.232,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3184.65,
+              "second": 3.232,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3058.15,
+              "second": 3.232,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3214.0,
+              "second": 3.232,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3004.61,
+              "second": 3.314,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3004.59,
+              "second": 3.314,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3006.84,
+              "second": 3.321,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3007.11,
+              "second": 3.322,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3007.39,
+              "second": 3.322,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3008.32,
+              "second": 3.323,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3008.27,
+              "second": 3.323,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3008.54,
+              "second": 3.323,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3008.4,
+              "second": 3.323,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3008.76,
+              "second": 3.324,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3005.92,
+              "second": 3.327,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3006.27,
+              "second": 3.327,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3006.16,
+              "second": 3.424,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3006.61,
+              "second": 3.424,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3007.25,
+              "second": 3.425,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3006.48,
+              "second": 3.426,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3003.53,
+              "second": 3.426,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3004.97,
+              "second": 3.532,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3003.92,
+              "second": 3.533,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3005.42,
+              "second": 3.641,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3004.02,
+              "second": 3.646,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3005.35,
+              "second": 3.864,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3012.7,
+              "second": 6.329,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3013.45,
+              "second": 6.33,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3013.05,
+              "second": 6.332,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3014.23,
+              "second": 6.334,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.15,
+              "second": 6.336,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.56,
+              "second": 6.337,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.67,
+              "second": 6.338,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.03,
+              "second": 6.338,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.16,
+              "second": 6.339,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.71,
+              "second": 6.34,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.93,
+              "second": 6.341,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.0,
+              "second": 6.341,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.16,
+              "second": 6.342,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.6,
+              "second": 6.342,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.48,
+              "second": 6.343,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.57,
+              "second": 6.343,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.78,
+              "second": 6.344,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3017.11,
+              "second": 6.344,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.91,
+              "second": 6.345,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.66,
+              "second": 6.346,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.59,
+              "second": 6.346,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.57,
+              "second": 6.346,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.8,
+              "second": 6.347,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.59,
+              "second": 6.347,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3016.43,
+              "second": 6.347,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.4,
+              "second": 6.347,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.24,
+              "second": 6.348,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.29,
+              "second": 6.348,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3015.17,
+              "second": 6.348,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3004.27,
+              "second": 6.419,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            },
+            {
+              "ok": false,
+              "status": 504,
+              "reason": "unexpected_status",
+              "ms": 3004.88,
+              "second": 6.426,
+              "journey": "Apple 로그인",
+              "step": "로그인",
+              "canary": false
+            }
+          ],
+          "configured_users": 70,
+          "active_users": 70
+        },
+        {
+          "name": "recovery",
+          "duration_seconds": 3.0,
+          "status": "completed",
+          "metrics": [
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 0.02
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 0.28
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 0.54
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 0.79
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 1.04
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 1.3
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 1.55
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 1.81
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 2.07
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 2.32
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 2.58
+            },
+            {
+              "available": true,
+              "pool_active": 0,
+              "pool_max": 10,
+              "pool_pending": 0,
+              "pool_timeouts": 0,
+              "external_inflight": 138,
+              "source": "application-json",
+              "second": 2.83
+            }
+          ],
+          "series": [
+            {
+              "second": 0,
+              "requests": 19,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.51,
+              "p95_ms": 15.68,
+              "rps": 19.0,
+              "statuses": {
+                "200": 19
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 1,
+              "requests": 19,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.13,
+              "p95_ms": 9.0,
+              "rps": 19.0,
+              "statuses": {
+                "200": 19
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            {
+              "second": 2,
+              "requests": 18,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 7.62,
+              "p95_ms": 8.79,
+              "rps": 18.0,
+              "statuses": {
+                "200": 18
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          ],
+          "by_journey": {
+            "Apple 로그인": {
+              "requests": 18,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 4.8,
+              "p95_ms": 9.53,
+              "rps": 5.83,
+              "statuses": {
+                "200": 18
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "보호 기능 (독립 관찰)": {
+              "requests": 28,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.04,
+              "p95_ms": 9.0,
+              "rps": 9.07,
+              "statuses": {
+                "200": 28
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 목록": {
+              "requests": 7,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.36,
+              "p95_ms": 8.7,
+              "rps": 2.27,
+              "statuses": {
+                "200": 7
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            },
+            "음식 검색": {
+              "requests": 3,
+              "failures": 0,
+              "error_rate": 0.0,
+              "p50_ms": 8.79,
+              "p95_ms": 8.82,
+              "rps": 0.97,
+              "statuses": {
+                "200": 3
+              },
+              "functional_failures": 0,
+              "timeouts": 0
+            }
+          },
+          "total": {
+            "requests": 56,
+            "failures": 0,
+            "error_rate": 0.0,
+            "p50_ms": 7.66,
+            "p95_ms": 9.0,
+            "rps": 18.13,
+            "statuses": {
+              "200": 56
+            },
+            "functional_failures": 0,
+            "timeouts": 0
+          },
+          "actual_seconds": 3.09,
+          "request_budget_hit": false,
+          "failures": [],
+          "configured_users": 70,
+          "active_users": 2
+        }
+      ],
+      "fault_restore": "ok"
+    }
+  ],
+  "events": [
+    {
+      "time": "2026-10-22T01:19:43.110116+00:00",
+      "stage": "control",
+      "message": "변경 전 · 장애 제어 연결과 원래 설정을 확인합니다."
+    },
+    {
+      "time": "2026-10-22T01:19:43.128668+00:00",
+      "stage": "preflight",
+      "message": "변경 전 · 행동별 정상 응답과 JSON 조건을 확인합니다."
+    },
+    {
+      "time": "2026-10-22T01:19:43.166645+00:00",
+      "stage": "baseline",
+      "message": "변경 전 · 3초 · 최대 동시 사용자 70명"
+    },
+    {
+      "time": "2026-10-22T01:19:46.272009+00:00",
+      "stage": "fault",
+      "message": "변경 전 · 6초 · 최대 동시 사용자 70명"
+    },
+    {
+      "time": "2026-10-22T01:19:52.680756+00:00",
+      "stage": "recovery",
+      "message": "변경 전 · 3초 · 최대 동시 사용자 70명"
+    },
+    {
+      "time": "2026-10-22T01:19:55.995568+00:00",
+      "stage": "control",
+      "message": "변경 후 · 장애 제어 연결과 원래 설정을 확인합니다."
+    },
+    {
+      "time": "2026-10-22T01:19:56.005600+00:00",
+      "stage": "preflight",
+      "message": "변경 후 · 행동별 정상 응답과 JSON 조건을 확인합니다."
+    },
+    {
+      "time": "2026-10-22T01:19:56.036878+00:00",
+      "stage": "baseline",
+      "message": "변경 후 · 3초 · 최대 동시 사용자 70명"
+    },
+    {
+      "time": "2026-10-22T01:19:59.122755+00:00",
+      "stage": "fault",
+      "message": "변경 후 · 6초 · 최대 동시 사용자 70명"
+    },
+    {
+      "time": "2026-10-22T01:20:06.314720+00:00",
+      "stage": "recovery",
+      "message": "변경 후 · 3초 · 최대 동시 사용자 70명"
+    },
+    {
+      "time": "2026-10-22T01:20:09.410030+00:00",
+      "stage": "analyze",
+      "message": "실측 요청·자원 지표를 대조해 장애 영향 범위를 판정합니다."
+    },
+    {
+      "time": "2026-10-22T01:20:09.411459+00:00",
+      "stage": "ai",
+      "message": "로컬 Ollama가 익명 집계 지표와 판정 근거를 분석합니다."
+    },
+    {
+      "time": "2026-10-22T01:20:12.149526+00:00",
+      "stage": "completed",
+      "message": "실험 종료 · completed"
+    }
+  ],
+  "summary": {
+    "targets": [
+      {
+        "label": "변경 전",
+        "verdict": "issues",
+        "findings": [
+          {
+            "code": "request_failures",
+            "title": "부하·장애 단계에서 요청 실패",
+            "evidence": "960/964건 실패 · 상태 {'200': 4, '503': 950, 'timeout': 10}",
+            "severity": "critical"
+          },
+          {
+            "code": "blast_radius",
+            "title": "보호해야 할 기능까지 영향 발생",
+            "evidence": "기준 오류율 0.0% → 부하·장애 93.8%; P95 9.47 → 311.13ms",
+            "severity": "critical"
+          },
+          {
+            "code": "recovery_incomplete",
+            "title": "회복 단계에도 보호 기능 실패가 남음",
+            "evidence": "회복 단계 오류율 100.0%",
+            "severity": "warning"
+          },
+          {
+            "code": "pool_exhaustion",
+            "title": "실제 DB 풀 포화와 연결 대기 관측",
+            "evidence": "포화 표본 22/23개 · 최대 연결 대기 70개",
+            "severity": "critical"
+          }
+        ],
+        "limits": [
+          "요청 처리 스레드 지표는 연결되지 않았습니다."
+        ],
+        "protected_affected": true,
+        "pool_observed": true,
+        "evidence_note": "보호 기능 변화와 DB 풀 포화·대기가 같은 장애 단계에서 관측됐습니다. 트랜잭션 위치 등 코드 원인은 별도 확인이 필요합니다."
+      },
+      {
+        "label": "변경 후",
+        "verdict": "issues",
+        "findings": [
+          {
+            "code": "request_failures",
+            "title": "부하·장애 단계에서 요청 실패",
+            "evidence": "138/282건 실패 · 상태 {'200': 144, '504': 138}",
+            "severity": "critical"
+          },
+          {
+            "code": "latency_slo",
+            "title": "P95 응답 시간 목표 초과",
+            "evidence": "P95 3167.5ms > 목표 1000.0ms",
+            "severity": "warning"
+          }
+        ],
+        "limits": [
+          "요청 처리 스레드 지표는 연결되지 않았습니다."
+        ],
+        "protected_affected": false,
+        "pool_observed": true,
+        "evidence_note": "HTTP 결과와 실제로 연결된 지표의 범위에서만 판정했습니다."
+      }
+    ],
+    "comparison": {
+      "before_protected_affected": true,
+      "after_protected_affected": false,
+      "isolation_observed": true,
+      "scope": "동일 설정의 순차 실험입니다. 이 조건에서의 비교이며 모든 장애에 대한 보장은 아닙니다."
+    },
+    "scope": "로컬 앱에 실제 HTTP 요청을 보낸 실험입니다. 가상 사용자는 순차 요청과 대기 시간을 갖는 폐쇄형 부하 모델이며 브라우저 사용자 수나 고정 RPS와 같지 않습니다.",
+    "latency_note": "응답 시간에는 실패·타임아웃이 포함됩니다. 보호 기능은 설정한 사용자 중 1명을 독립 관찰용으로 사용합니다."
+  },
+  "ai": {
+    "status": "completed",
+    "text": "AI가 실제 관측에서 만든 후보 중 다음 실험을 선택했습니다. 수치와 판정은 위 실측 결과를 기준으로 봅니다.\n\n1. 변경 전 · DB 풀 크기만 늘려 영향 비교\n실제 풀 포화와 연결 대기가 관측됐으므로, 풀 크기 변화에 실패율이 반응하는지 확인합니다. 근본 해결책이라고 단정하지 않습니다.\n\n2. 변경 전 · 외부 장애 없이 같은 부하 반복\n부하 자체의 영향과 외부 장애의 영향을 분리하기 위해 정상 외부 응답 조건으로 비교합니다.\n\n3. 변경 전 · 외부 지연을 절반으로 줄여 비교\n보호 기능 영향이 관측된 조건에서 외부 지연만 바꿔 장애 전파와의 관계를 확인합니다.",
+    "proposals": [
+      {
+        "id": "t0.pool",
+        "title": "변경 전 · DB 풀 크기만 늘려 영향 비교",
+        "reason": "실제 풀 포화와 연결 대기가 관측됐으므로, 풀 크기 변화에 실패율이 반응하는지 확인합니다. 근본 해결책이라고 단정하지 않습니다.",
+        "patch": {
+          "target_url": "http://127.0.0.1:8731/vulnerable",
+          "comparison_url": null,
+          "pool_size": 20
+        }
+      },
+      {
+        "id": "t0.normal",
+        "title": "변경 전 · 외부 장애 없이 같은 부하 반복",
+        "reason": "부하 자체의 영향과 외부 장애의 영향을 분리하기 위해 정상 외부 응답 조건으로 비교합니다.",
+        "patch": {
+          "target_url": "http://127.0.0.1:8731/vulnerable",
+          "comparison_url": null,
+          "external_delay_seconds": 0,
+          "external_status": 200
+        }
+      },
+      {
+        "id": "t0.delay",
+        "title": "변경 전 · 외부 지연을 절반으로 줄여 비교",
+        "reason": "보호 기능 영향이 관측된 조건에서 외부 지연만 바꿔 장애 전파와의 관계를 확인합니다.",
+        "patch": {
+          "target_url": "http://127.0.0.1:8731/vulnerable",
+          "comparison_url": null,
+          "external_delay_seconds": 5.0
+        }
+      }
+    ],
+    "model": "qwen3:8b",
+    "input_tokens": 1163,
+    "output_tokens": 20
+  },
+  "finished_at": "2026-10-22T01:20:12.149446+00:00",
+  "elapsed_seconds": 29.05
+}

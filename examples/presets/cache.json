@@ -1,0 +1,139 @@
+{
+  "name": "Redis 연결 장애 · DB 대체 경로",
+  "target_url": "http://127.0.0.1:8731/vulnerable",
+  "comparison_url": "http://127.0.0.1:8731/isolated",
+  "users": 10,
+  "pattern": "spike",
+  "baseline_seconds": 3.0,
+  "fault_seconds": 6.0,
+  "recovery_seconds": 3.0,
+  "think_ms": 100,
+  "timeout_seconds": 4.0,
+  "slo_ms": 1000.0,
+  "fault_mode": "demo",
+  "control_path": "/__burstguard/control",
+  "external_delay_seconds": 0.0,
+  "external_status": 200,
+  "pool_size": 10,
+  "pool_wait_seconds": 0.3,
+  "provider_timeout_seconds": 3.0,
+  "metrics": {
+    "mode": "json",
+    "path": "/__burstguard/metrics",
+    "pool": null
+  },
+  "journeys": [
+    {
+      "name": "캐시 목록",
+      "weight": 1,
+      "steps": [
+        {
+          "name": "요청",
+          "method": "GET",
+          "path": "/cached-foods",
+          "body": null,
+          "expected_status": [
+            200
+          ],
+          "expect_json": "items",
+          "expect_values": {},
+          "extract": {},
+          "extract_headers": {},
+          "bearer_variable": null
+        }
+      ]
+    }
+  ],
+  "protected_step": {
+    "name": "보호할 캐시 목록",
+    "method": "GET",
+    "path": "/cached-foods",
+    "body": null,
+    "expected_status": [
+      200
+    ],
+    "expect_json": "items",
+    "expect_values": {},
+    "extract": {},
+    "extract_headers": {},
+    "bearer_variable": null
+  },
+  "analysis": "rules",
+  "mode": "load",
+  "faults": {
+    "external_behavior": "normal",
+    "db_delay_ms": 0,
+    "db_lock_seconds": 0,
+    "cache_unavailable": true
+  },
+  "integrity": {
+    "enabled": false,
+    "cases": [
+      "stock",
+      "idempotency"
+    ],
+    "setup": null,
+    "mutation": {
+      "name": "주문",
+      "method": "POST",
+      "path": "/orders",
+      "body": {
+        "scope": "{{experiment_id}}",
+        "key": "{{request_key}}",
+        "quantity": 1
+      },
+      "expected_status": [
+        200,
+        201,
+        409
+      ],
+      "expect_json": null,
+      "expect_values": {},
+      "extract": {},
+      "extract_headers": {},
+      "bearer_variable": null
+    },
+    "snapshot": {
+      "name": "주문 상태",
+      "method": "GET",
+      "path": "/orders/state?scope={{experiment_id}}",
+      "body": null,
+      "expected_status": [
+        200
+      ],
+      "expect_json": null,
+      "expect_values": {},
+      "extract": {},
+      "extract_headers": {},
+      "bearer_variable": null
+    },
+    "stock_path": "stock",
+    "orders_path": "orders",
+    "unique_keys_path": "unique_keys",
+    "quantity": 1,
+    "stock_requests": 20,
+    "duplicate_copies": 5,
+    "rounds": 2,
+    "settle_seconds": 0.1
+  },
+  "restart": {
+    "enabled": false,
+    "mode": "abrupt",
+    "at_seconds": 1.0,
+    "snapshot": null,
+    "compare_paths": [
+      "stock",
+      "orders",
+      "unique_keys"
+    ]
+  },
+  "soak": {
+    "enabled": false,
+    "min_observation_seconds": 30.0,
+    "rss_growth_mb": 16.0,
+    "fd_growth": 16,
+    "thread_growth": 8
+  },
+  "setup_steps": [],
+  "request_budget": 50000
+}

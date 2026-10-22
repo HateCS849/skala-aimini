@@ -1,0 +1,1122 @@
+{
+  "run_id": "fcdca7305d0d4560bbcb54fbcbc28637",
+  "synthetic_only": true,
+  "status": "completed",
+  "sse_updates": 64,
+  "roles": [
+    "executor",
+    "gate",
+    "planner",
+    "replan_check",
+    "research",
+    "validator",
+    "write"
+  ],
+  "usage": {
+    "input_tokens": 4930,
+    "output_tokens": 123,
+    "llm_calls": 4,
+    "llm_attempts": 4
+  },
+  "plans": [
+    {
+      "scenario_id": "requested",
+      "reference_ids": [
+        "ref0",
+        "ref2"
+      ],
+      "title": "사용자가 지정한 원래 실험",
+      "patch": {},
+      "backend": "ollama"
+    },
+    {
+      "scenario_id": "reduced_load",
+      "reference_ids": [
+        "ref2",
+        "ref0"
+      ],
+      "title": "동시 사용자를 줄인 대조 실험",
+      "patch": {
+        "users": 5
+      },
+      "backend": "ollama"
+    }
+  ],
+  "mcp_calls": [
+    "prompts/get:resilience_plan",
+    "resources/read:burstguard-default",
+    "tools/call:search_runbooks",
+    "tools/call:evaluate_evidence",
+    "tools/call:evaluate_evidence"
+  ],
+  "references": [
+    {
+      "source": "burstguard/runbooks.md",
+      "method": "bm25"
+    },
+    {
+      "source": "burstguard/runbooks.md",
+      "method": "bm25"
+    },
+    {
+      "source": "synthetic-pool-runbook.md",
+      "method": "bm25"
+    }
+  ],
+  "validation": {
+    "verdict": "complete",
+    "requested_tested": true,
+    "experiments": 2,
+    "issues": [],
+    "limitations": []
+  },
+  "comparison": {
+    "before_protected_affected": true,
+    "after_protected_affected": false,
+    "isolation_observed": true,
+    "scope": "동일 설정의 순차 실험입니다. 이 조건에서의 비교이며 모든 장애에 대한 보장은 아닙니다.",
+    "integrity_improved": false
+  },
+  "contrasts": [
+    {
+      "target": "변경 전",
+      "control": "reduced_load",
+      "status": "no_protected_change",
+      "requested_protected_affected": true,
+      "control_protected_affected": true,
+      "requested_findings": [
+        "request_failures",
+        "blast_radius",
+        "pool_exhaustion"
+      ],
+      "control_findings": [
+        "request_failures",
+        "latency_slo",
+        "blast_radius",
+        "pool_exhaustion"
+      ],
+      "scope": "같은 로컬 머신의 순차 대조입니다. 내부 코드 원인 확정이나 모든 장애의 격리를 뜻하지 않습니다."
+    },
+    {
+      "target": "변경 후",
+      "control": "reduced_load",
+      "status": "no_protected_change",
+      "requested_protected_affected": false,
+      "control_protected_affected": false,
+      "requested_findings": [
+        "request_failures"
+      ],
+      "control_findings": [
+        "request_failures"
+      ],
+      "scope": "같은 로컬 머신의 순차 대조입니다. 내부 코드 원인 확정이나 모든 장애의 격리를 뜻하지 않습니다."
+    }
+  ],
+  "experiments": [
+    {
+      "scenario_id": "requested",
+      "validation": {
+        "verdict": "complete",
+        "issues": [],
+        "supported_findings": [
+          {
+            "id": "t0.request_failures",
+            "code": "request_failures",
+            "title": "부하·장애 단계에서 요청 실패",
+            "evidence": "123/133건 실패 · 상태 {'200': 10, '503': 123}"
+          },
+          {
+            "id": "t0.blast_radius",
+            "code": "blast_radius",
+            "title": "보호해야 할 기능까지 영향 발생",
+            "evidence": "기준 오류율 0.0% → 부하·장애 85.7%; P95 15.42 → 107.58ms"
+          },
+          {
+            "id": "t0.pool_exhaustion",
+            "code": "pool_exhaustion",
+            "title": "실제 DB 풀 포화와 연결 대기 관측",
+            "evidence": "포화 표본 7/9개 · 최대 연결 대기 8개"
+          },
+          {
+            "id": "t1.request_failures",
+            "code": "request_failures",
+            "title": "부하·장애 단계에서 요청 실패",
+            "evidence": "78/160건 실패 · 상태 {'200': 82, '504': 78}"
+          }
+        ],
+        "meaning": "complete는 측정 근거의 충분성입니다. 서비스에 오류가 없다는 의미가 아닙니다.",
+        "priority_ids": [
+          "t0.request_failures",
+          "t0.blast_radius",
+          "t0.pool_exhaustion"
+        ],
+        "backend": "ollama"
+      },
+      "targets": [
+        {
+          "label": "변경 전",
+          "fault_restore": "ok",
+          "phases": [
+            {
+              "name": "baseline",
+              "total": {
+                "requests": 52,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 7.82,
+                "p95_ms": 9.6,
+                "rps": 49.86,
+                "statuses": {
+                  "200": 52
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 25,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.81,
+                  "p95_ms": 9.6,
+                  "rps": 23.97,
+                  "statuses": {
+                    "200": 25
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.93,
+                  "p95_ms": 15.42,
+                  "rps": 16.3,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 7,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.11,
+                  "p95_ms": 8.32,
+                  "rps": 6.71,
+                  "statuses": {
+                    "200": 7
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 9.24,
+                  "p95_ms": 9.41,
+                  "rps": 2.88,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "fault",
+              "total": {
+                "requests": 133,
+                "failures": 123,
+                "error_rate": 0.9248,
+                "p50_ms": 105.24,
+                "p95_ms": 114.57,
+                "rps": 63.54,
+                "statuses": {
+                  "200": 10,
+                  "503": 123
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "보호 기능 (독립 관찰)": {
+                  "requests": 14,
+                  "failures": 12,
+                  "error_rate": 0.8571,
+                  "p50_ms": 103.33,
+                  "p95_ms": 107.58,
+                  "rps": 6.69,
+                  "statuses": {
+                    "200": 2,
+                    "503": 12
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 14,
+                  "failures": 12,
+                  "error_rate": 0.8571,
+                  "p50_ms": 104.91,
+                  "p95_ms": 114.12,
+                  "rps": 6.69,
+                  "statuses": {
+                    "200": 2,
+                    "503": 12
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "Apple 로그인": {
+                  "requests": 73,
+                  "failures": 69,
+                  "error_rate": 0.9452,
+                  "p50_ms": 105.59,
+                  "p95_ms": 1022.09,
+                  "rps": 34.87,
+                  "statuses": {
+                    "503": 69,
+                    "200": 4
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 32,
+                  "failures": 30,
+                  "error_rate": 0.9375,
+                  "p50_ms": 104.99,
+                  "p95_ms": 114.57,
+                  "rps": 15.29,
+                  "statuses": {
+                    "503": 30,
+                    "200": 2
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "recovery",
+              "total": {
+                "requests": 54,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 6.91,
+                "p95_ms": 9.22,
+                "rps": 51.99,
+                "statuses": {
+                  "200": 54
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 26,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 5.82,
+                  "p95_ms": 7.24,
+                  "rps": 25.03,
+                  "statuses": {
+                    "200": 26
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.47,
+                  "p95_ms": 13.81,
+                  "rps": 16.37,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 8,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.28,
+                  "p95_ms": 8.47,
+                  "rps": 7.7,
+                  "statuses": {
+                    "200": 8
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.59,
+                  "p95_ms": 7.71,
+                  "rps": 2.89,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "변경 후",
+          "fault_restore": "ok",
+          "phases": [
+            {
+              "name": "baseline",
+              "total": {
+                "requests": 52,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 7.37,
+                "p95_ms": 11.58,
+                "rps": 50.37,
+                "statuses": {
+                  "200": 52
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 25,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.07,
+                  "p95_ms": 11.4,
+                  "rps": 24.21,
+                  "statuses": {
+                    "200": 25
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 8.08,
+                  "p95_ms": 12.13,
+                  "rps": 16.47,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 7,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.3,
+                  "p95_ms": 9.18,
+                  "rps": 6.78,
+                  "statuses": {
+                    "200": 7
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 10.14,
+                  "p95_ms": 10.57,
+                  "rps": 2.91,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "fault",
+              "total": {
+                "requests": 160,
+                "failures": 78,
+                "error_rate": 0.4875,
+                "p50_ms": 28.49,
+                "p95_ms": 205.04,
+                "rps": 72.0,
+                "statuses": {
+                  "200": 82,
+                  "504": 78
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "보호 기능 (독립 관찰)": {
+                  "requests": 34,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.44,
+                  "p95_ms": 9.54,
+                  "rps": 15.3,
+                  "statuses": {
+                    "200": 34
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 14,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.43,
+                  "p95_ms": 32.59,
+                  "rps": 6.3,
+                  "statuses": {
+                    "200": 14
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 34,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.18,
+                  "p95_ms": 26.27,
+                  "rps": 15.3,
+                  "statuses": {
+                    "200": 34
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "Apple 로그인": {
+                  "requests": 78,
+                  "failures": 78,
+                  "error_rate": 1.0,
+                  "p50_ms": 203.44,
+                  "p95_ms": 214.6,
+                  "rps": 35.1,
+                  "statuses": {
+                    "504": 78
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "recovery",
+              "total": {
+                "requests": 54,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 6.86,
+                "p95_ms": 9.4,
+                "rps": 52.2,
+                "statuses": {
+                  "200": 54
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 26,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 4.91,
+                  "p95_ms": 7.25,
+                  "rps": 25.13,
+                  "statuses": {
+                    "200": 26
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.38,
+                  "p95_ms": 15.68,
+                  "rps": 16.43,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 8,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.35,
+                  "p95_ms": 8.11,
+                  "rps": 7.73,
+                  "statuses": {
+                    "200": 8
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 8.27,
+                  "p95_ms": 9.4,
+                  "rps": 2.9,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario_id": "reduced_load",
+      "validation": {
+        "verdict": "complete",
+        "issues": [],
+        "supported_findings": [
+          {
+            "id": "t0.request_failures",
+            "code": "request_failures",
+            "title": "부하·장애 단계에서 요청 실패",
+            "evidence": "41/54건 실패 · 상태 {'200': 13, '503': 41}"
+          },
+          {
+            "id": "t0.latency_slo",
+            "code": "latency_slo",
+            "title": "P95 응답 시간 목표 초과",
+            "evidence": "P95 1024.63ms > 목표 1000.0ms"
+          },
+          {
+            "id": "t0.blast_radius",
+            "code": "blast_radius",
+            "title": "보호해야 할 기능까지 영향 발생",
+            "evidence": "기준 오류율 0.0% → 부하·장애 85.7%; P95 11.18 → 106.6ms"
+          },
+          {
+            "id": "t0.pool_exhaustion",
+            "code": "pool_exhaustion",
+            "title": "실제 DB 풀 포화와 연결 대기 관측",
+            "evidence": "포화 표본 6/9개 · 최대 연결 대기 3개"
+          },
+          {
+            "id": "t1.request_failures",
+            "code": "request_failures",
+            "title": "부하·장애 단계에서 요청 실패",
+            "evidence": "34/92건 실패 · 상태 {'200': 58, '504': 34}"
+          }
+        ],
+        "meaning": "complete는 측정 근거의 충분성입니다. 서비스에 오류가 없다는 의미가 아닙니다.",
+        "priority_ids": [
+          "t0.request_failures",
+          "t0.latency_slo",
+          "t0.blast_radius"
+        ],
+        "backend": "ollama"
+      },
+      "targets": [
+        {
+          "label": "변경 전",
+          "fault_restore": "ok",
+          "phases": [
+            {
+              "name": "baseline",
+              "total": {
+                "requests": 53,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 7.33,
+                "p95_ms": 11.18,
+                "rps": 51.27,
+                "statuses": {
+                  "200": 53
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 26,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 6.12,
+                  "p95_ms": 11.36,
+                  "rps": 25.15,
+                  "statuses": {
+                    "200": 26
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 8.22,
+                  "p95_ms": 11.18,
+                  "rps": 16.44,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 7,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.67,
+                  "p95_ms": 9.33,
+                  "rps": 6.77,
+                  "statuses": {
+                    "200": 7
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 10.28,
+                  "p95_ms": 11.08,
+                  "rps": 2.9,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "fault",
+              "total": {
+                "requests": 54,
+                "failures": 41,
+                "error_rate": 0.7593,
+                "p50_ms": 105.13,
+                "p95_ms": 1024.63,
+                "rps": 17.4,
+                "statuses": {
+                  "200": 13,
+                  "503": 41
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "보호 기능 (독립 관찰)": {
+                  "requests": 14,
+                  "failures": 12,
+                  "error_rate": 0.8571,
+                  "p50_ms": 104.57,
+                  "p95_ms": 106.6,
+                  "rps": 4.51,
+                  "statuses": {
+                    "200": 2,
+                    "503": 12
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 5,
+                  "failures": 4,
+                  "error_rate": 0.8,
+                  "p50_ms": 105.3,
+                  "p95_ms": 107.67,
+                  "rps": 1.61,
+                  "statuses": {
+                    "200": 1,
+                    "503": 4
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "Apple 로그인": {
+                  "requests": 23,
+                  "failures": 17,
+                  "error_rate": 0.7391,
+                  "p50_ms": 105.29,
+                  "p95_ms": 1103.58,
+                  "rps": 7.41,
+                  "statuses": {
+                    "503": 17,
+                    "200": 6
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 12,
+                  "failures": 8,
+                  "error_rate": 0.6667,
+                  "p50_ms": 104.95,
+                  "p95_ms": 108.18,
+                  "rps": 3.87,
+                  "statuses": {
+                    "503": 8,
+                    "200": 4
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "recovery",
+              "total": {
+                "requests": 54,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 6.93,
+                "p95_ms": 10.24,
+                "rps": 52.39,
+                "statuses": {
+                  "200": 54
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 26,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 4.05,
+                  "p95_ms": 8.65,
+                  "rps": 25.22,
+                  "statuses": {
+                    "200": 26
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.94,
+                  "p95_ms": 12.3,
+                  "rps": 16.49,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 8,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.27,
+                  "p95_ms": 8.8,
+                  "rps": 7.76,
+                  "statuses": {
+                    "200": 8
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 6.95,
+                  "p95_ms": 7.36,
+                  "rps": 2.91,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "변경 후",
+          "fault_restore": "ok",
+          "phases": [
+            {
+              "name": "baseline",
+              "total": {
+                "requests": 56,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 6.77,
+                "p95_ms": 9.38,
+                "rps": 52.9,
+                "statuses": {
+                  "200": 56
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 27,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 4.19,
+                  "p95_ms": 7.08,
+                  "rps": 25.51,
+                  "statuses": {
+                    "200": 27
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 18,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.36,
+                  "p95_ms": 10.69,
+                  "rps": 17.0,
+                  "statuses": {
+                    "200": 18
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 8,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.1,
+                  "p95_ms": 8.63,
+                  "rps": 7.56,
+                  "statuses": {
+                    "200": 8
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 8.99,
+                  "p95_ms": 9.38,
+                  "rps": 2.83,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "fault",
+              "total": {
+                "requests": 92,
+                "failures": 34,
+                "error_rate": 0.3696,
+                "p50_ms": 9.51,
+                "p95_ms": 207.8,
+                "rps": 41.73,
+                "statuses": {
+                  "200": 58,
+                  "504": 34
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "보호 기능 (독립 관찰)": {
+                  "requests": 34,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 8.38,
+                  "p95_ms": 20.74,
+                  "rps": 15.42,
+                  "statuses": {
+                    "200": 34
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 6,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.62,
+                  "p95_ms": 17.32,
+                  "rps": 2.72,
+                  "statuses": {
+                    "200": 6
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "Apple 로그인": {
+                  "requests": 34,
+                  "failures": 34,
+                  "error_rate": 1.0,
+                  "p50_ms": 204.4,
+                  "p95_ms": 215.34,
+                  "rps": 15.42,
+                  "statuses": {
+                    "504": 34
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 18,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 8.56,
+                  "p95_ms": 10.8,
+                  "rps": 8.16,
+                  "statuses": {
+                    "200": 18
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            },
+            {
+              "name": "recovery",
+              "total": {
+                "requests": 54,
+                "failures": 0,
+                "error_rate": 0.0,
+                "p50_ms": 7.15,
+                "p95_ms": 11.9,
+                "rps": 52.01,
+                "statuses": {
+                  "200": 54
+                },
+                "functional_failures": 0,
+                "timeouts": 0
+              },
+              "by_journey": {
+                "Apple 로그인": {
+                  "requests": 26,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 5.06,
+                  "p95_ms": 7.58,
+                  "rps": 25.04,
+                  "statuses": {
+                    "200": 26
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "보호 기능 (독립 관찰)": {
+                  "requests": 17,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.63,
+                  "p95_ms": 12.72,
+                  "rps": 16.37,
+                  "statuses": {
+                    "200": 17
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 목록": {
+                  "requests": 8,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.42,
+                  "p95_ms": 8.1,
+                  "rps": 7.7,
+                  "statuses": {
+                    "200": 8
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                },
+                "음식 검색": {
+                  "requests": 3,
+                  "failures": 0,
+                  "error_rate": 0.0,
+                  "p50_ms": 7.53,
+                  "p95_ms": 8.53,
+                  "rps": 2.89,
+                  "statuses": {
+                    "200": 3
+                  },
+                  "functional_failures": 0,
+                  "timeouts": 0
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "trace": {
+    "provider": "LangSmith RunTree SDK",
+    "delivery": "metadata_export_verified",
+    "cloud_verified": true,
+    "spans": 13
+  },
+  "all_restored": true,
+  "cloud_receipt": {
+    "status": "verified",
+    "synthetic_only": true,
+    "delivery_mode": "completed_run_metadata_export",
+    "project": "burstguard-cloud-verification",
+    "cloud_root_id": "f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3",
+    "source_root_id": "01a1617a-ad10-7251-8fca-7667448a9d5a",
+    "verification_nonce": "e80e71e0-88c8-4d5e-bec7-6af43d895e9d",
+    "url": "https://smith.langchain.com/o/9ff2f04c-2b5a-44fc-9d69-8a126e701d1c/projects/p/b879911d-c08e-4209-8695-023863cea9cf/r/f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3?trace_id=f51fbf09-5ff8-47ad-ad1f-0e8c791f74b3&start_time=2026-10-22T02:39:52.080267",
+    "readback": {
+      "verified": true,
+      "expected": 13,
+      "received": 13,
+      "missing_ids": [],
+      "invalid_ids": []
+    },
+    "completed_llm_spans": 4,
+    "completed_tool_spans": 3,
+    "span_names": [
+      "burstguard.executor",
+      "burstguard.gate",
+      "burstguard.planner",
+      "burstguard.replan_check",
+      "burstguard.research",
+      "burstguard.supervisor",
+      "burstguard.validator",
+      "burstguard.write"
+    ],
+    "checked_at": "2026-10-22T02:41:08.479274+00:00",
+    "scope": "실제 합성 메인 실행의 역할·완료 상태·시간·집계 메타데이터를 내보내고 모든 ID·부모 관계·입출력을 클라우드에서 대조했습니다. 첨부·프롬프트 원문이나 인증은 전송하지 않습니다.",
+    "source_experiment_id": "fcdca7305d0d4560bbcb54fbcbc28637"
+  }
+}

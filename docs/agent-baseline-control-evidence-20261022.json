@@ -1,0 +1,85 @@
+{
+  "run_id": "8cfa96f00e9141c8824ca3395ac77867",
+  "source": "previous baseline vs no-fault control",
+  "plans": [
+    {
+      "scenario_id": "requested",
+      "reference_ids": [
+        "ref0",
+        "ref2"
+      ],
+      "title": "사용자가 지정한 원래 실험",
+      "patch": {},
+      "backend": "ollama"
+    },
+    {
+      "scenario_id": "no_fault",
+      "reference_ids": [
+        "ref0",
+        "ref2"
+      ],
+      "title": "장애를 해제한 동일 부하",
+      "patch": {
+        "external_delay_seconds": 0,
+        "external_status": 200,
+        "faults": {
+          "external_behavior": "normal",
+          "db_delay_ms": 0,
+          "db_lock_seconds": 0,
+          "cache_unavailable": false
+        },
+        "restart": {
+          "enabled": false,
+          "mode": "abrupt",
+          "at_seconds": 1.0,
+          "snapshot": null,
+          "compare_paths": [
+            "stock",
+            "orders",
+            "unique_keys"
+          ]
+        }
+      },
+      "backend": "ollama"
+    }
+  ],
+  "contrasts": [
+    {
+      "target": "변경 전",
+      "control": "no_fault",
+      "status": "observed_change",
+      "requested_protected_affected": true,
+      "control_protected_affected": false,
+      "requested_findings": [
+        "request_failures",
+        "blast_radius",
+        "pool_exhaustion"
+      ],
+      "control_findings": [
+        "pool_exhaustion"
+      ],
+      "scope": "같은 로컬 머신의 순차 대조입니다. 내부 코드 원인 확정이나 모든 장애의 격리를 뜻하지 않습니다."
+    },
+    {
+      "target": "변경 후",
+      "control": "no_fault",
+      "status": "no_protected_change",
+      "requested_protected_affected": false,
+      "control_protected_affected": false,
+      "requested_findings": [
+        "request_failures"
+      ],
+      "control_findings": [
+        "pool_exhaustion"
+      ],
+      "scope": "같은 로컬 머신의 순차 대조입니다. 내부 코드 원인 확정이나 모든 장애의 격리를 뜻하지 않습니다."
+    }
+  ],
+  "comparison": {
+    "before_protected_affected": true,
+    "after_protected_affected": false,
+    "isolation_observed": true,
+    "scope": "동일 설정의 순차 실험입니다. 이 조건에서의 비교이며 모든 장애에 대한 보장은 아닙니다.",
+    "integrity_improved": false
+  }
+}
