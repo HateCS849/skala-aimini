@@ -8,33 +8,83 @@
 - [새 메인 AI 실제 실행 증거](docs/agent-live-evidence-20261022.json)
 - [새 메인 AI 입력 최적화 실측](docs/benchmark-resilience-agents-20261022.json)
 
-LangSmith RunTree SDK 추적은 기본적으로 로컬 JSON에 저장합니다. 명시적으로 허용한 합성 실행의 메타데이터는 클라우드에 전송하고 **13/13개를 다시 조회해 수신 확인**했습니다. [클라우드 수신 증빙](docs/LANGSMITH_CLOUD_VERIFICATION_20261022.md)을 참조하세요. 일반 실험을 자동 전송하도록 설정한 것은 아닙니다. 실제 Hangari 검증과 PPT·발표는 별도 범위입니다.
+LangSmith RunTree SDK 추적은 기본적으로 로컬 JSON에 저장합니다. 명시적으로 허용한 합성 실행의 메타데이터는 클라우드에 전송하고 **13/13개를 다시 조회해 수신 확인**했습니다. [클라우드 수신 증빙](docs/LANGSMITH_CLOUD_VERIFICATION_20261022.md)을 참조하세요. 일반 실험을 자동 전송하도록 설정한 것은 아닙니다.
 
 기존 `../crashcustomer`를 복사해 만든 별도 프로그램입니다. 원본 소스·`.env`·실행 기록을 수정하지 않습니다. 새 복사본은 독립 가상환경과 데이터 폴더를 사용하며, 원본의 프로젝트 5개와 첨부 자료 8개만 읽기 전용 연결로 복사했습니다. 인증 키·기존 실행 이력은 가져오지 않았습니다.
 
-## 실행
+## 실행 방법
 
-현재 컴퓨터에는 가상환경이 준비되어 있습니다.
+### 1. 준비물
+
+| 항목 | 필요 여부 | 비고 |
+|---|---|---|
+| Python 3.11 이상 | 필수 | |
+| [uv](https://docs.astral.sh/uv/) | 필수 | 의존성 설치 (`curl -LsSf https://astral.sh/uv/install.sh \| sh`) |
+| Ollama + `qwen3:8b` | 선택 | AI 감독·AI 분석을 쓸 때만. 없으면 규칙 기반으로 동작 |
+| Docker | 선택 | Redis 장애 실험을 할 때만 |
+
+### 2. 설치
 
 ```bash
-cd burstguard
+git clone https://github.com/HateCS849/skala-aimini.git
+cd skala-aimini
+uv sync --extra dev --locked
+cp .env.example .env   # 선택: Ollama 주소·모델, LangSmith 설정
+```
+
+브라우저 검사 화면(`/browser`)까지 쓰려면 Playwright 브라우저를 한 번 설치합니다.
+
+```bash
+.venv/bin/python -m playwright install chromium
+```
+
+### 3. 서버 실행
+
+```bash
 bash scripts/start_all.sh
 ```
 
-- 새 실험실: http://127.0.0.1:8730/
-- 복사한 브라우저 검사·프로젝트 자료: http://127.0.0.1:8730/browser
-- 장애 재현 예제 앱: http://127.0.0.1:8731/health
-- 기존 CrashCustomer: http://127.0.0.1:8710/ (독립 실행 서비스)
+실험실(8730)과 장애 재현 예제 앱(8731)이 함께 뜹니다. 종료는 `Ctrl-C`입니다. 8730~8732 포트가 이미 사용 중이면 기존 프로세스는 건드리지 않고 시작을 멈춥니다.
 
-Redis 장애 예제는 전용 Redis를 먼저 실행합니다. 기존 Redis를 재사용하거나 중지하지 않습니다.
+| 주소 | 내용 |
+|---|---|
+| http://127.0.0.1:8730/ | BurstGuard 실험실 (메인 화면) |
+| http://127.0.0.1:8730/browser | 브라우저 검사·프로젝트 자료 |
+| http://127.0.0.1:8730/docs | API 문서 (FastAPI) |
+| http://127.0.0.1:8731/health | 장애 재현 예제 앱 |
+
+실험실만 따로 실행하려면 `bash scripts/run.sh`를 사용합니다.
+
+### 4. 선택 기능
+
+**로컬 AI (AI 감독·AI 분석)**
+
+```bash
+ollama pull qwen3:8b
+ollama serve
+```
+
+화면의 결과 분석에서 `AI 감독 · 근거 검색 → 계획 → 실행 → 검증`을 선택합니다. 모델과 주소는 `.env`의 `OLLAMA_MODEL`, `OLLAMA_BASE_URL`로 바꿉니다.
+
+**Redis 장애 실험**
 
 ```bash
 bash scripts/start_redis.sh
 ```
 
-Docker의 `redis:7-alpine`을 `burstguard-fixture` 프로젝트와 127.0.0.1:16379 포트로 실행합니다. 중지할 때는 `docker compose -p burstguard-fixture -f examples/redis-compose.yaml down`을 사용합니다. 데이터는 테스트용 휘발성 캐시입니다.
+Docker의 `redis:7-alpine`을 `burstguard-fixture` 프로젝트와 127.0.0.1:16379 포트로 실행합니다. 기존 Redis를 재사용하거나 중지하지 않습니다. 중지할 때는 `docker compose -p burstguard-fixture -f examples/redis-compose.yaml down`을 사용합니다.
 
-다른 환경에서 설치할 때는 `uv sync --extra dev --locked` 후 위 명령을 사용합니다. 예제 서버를 따로 실행하려면 `.venv/bin/python -m uvicorn examples.resilience_app:app --host 127.0.0.1 --port 8731`, 실험실만 실행하려면 `bash scripts/run.sh`를 사용합니다. 기존 서비스의 프로세스를 종료하거나 포트를 공유하지 않습니다.
+**LangSmith 추적**
+
+`.env`에 `LANGSMITH_TRACING=true`와 `LANGSMITH_API_KEY`를 넣습니다. `.env`는 Git에 올라가지 않습니다. 기본값은 로컬 JSON 추적만 남깁니다.
+
+### 5. 테스트
+
+```bash
+LANGSMITH_TRACING=false .venv/bin/python -m pytest -q
+```
+
+단위·통합 테스트 212개가 실행됩니다. 실제 서버나 Ollama 없이 가짜 모델·가짜 HTTP 클라이언트를 주입해서 돌아갑니다.
 
 ## 바로 확인하는 실험
 
@@ -95,16 +145,31 @@ Docker의 `redis:7-alpine`을 `burstguard-fixture` 프로젝트와 127.0.0.1:163
 
 구체적인 계약은 [연결 가이드](docs/RESILIENCE_ADAPTERS.md), 현재 Hangari 코드에 맞춘 준비 사항은 [Hangari 가이드](docs/HANGARI_CONNECTION.md)에 있습니다. Hangari 원본에는 변경을 적용하지 않았습니다.
 
+### 예: 로컬 Hangari 서버 연결
+
+Hangari를 `local` 프로필로 http://localhost:10000 에 띄운 상태에서 진행합니다. 로컬 프로필은 JWT가 아닌 `identityToken`을 합성 테스트 사용자(`local.*`)로 처리합니다.
+
+1. 테스트 로그인으로 토큰을 받습니다. `Device-Id` 헤더가 필요하며, 토큰은 응답의 `Authorization` 헤더로 옵니다.
+
+   ```bash
+   curl -i -X POST http://localhost:10000/api/v1/auth/social-login \
+     -H 'Content-Type: application/json' -H 'Device-Id: burstguard-device-1' \
+     -d '{"provider":"APPLE","authorizationCode":"test","identityToken":"burstguard-test-1","nonce":"test"}'
+   ```
+
+2. 처음 로그인한 사용자는 `ONBOARDING_REQUIRED`입니다. 위 토큰으로 온보딩하면 응답 헤더로 새 토큰이 옵니다. 검색 API는 온보딩된 토큰이 있어야 200을 반환합니다.
+
+   ```bash
+   curl -i -X POST http://localhost:10000/api/v1/auth/onboarding \
+     -H "Authorization: Bearer <1번 토큰>" -H 'Device-Id: burstguard-device-1' -H 'Content-Type: application/json' \
+     -d '{"name":"BurstGuard Tester","gender":"MALE","countryCode":"KOR","languageCode":"KOR","birthDate":"2000-01-01","appEntrySource":"APP_STORE"}'
+   ```
+
+3. 실험실에서 대상 주소 `http://localhost:10000`, 장애 모드 **트래픽만 측정**, 비교 끔, 고급 설정의 Bearer 토큰에 2번 토큰을 넣고, [Hangari 가이드](docs/HANGARI_CONNECTION.md)의 콘텐츠 목록·검색 행동을 사용합니다.
+
+2026-10-22 실측(같은 컴퓨터, 사용자 200명·부하 60초): 66,854건 모두 200, 실패·타임아웃 0건, P95 20ms → 173ms → 회복 22ms. Hangari는 Actuator가 없어 DB 풀 고갈 여부는 판정하지 않았습니다.
+
 실제 자원 지표를 읽을 수 있는 권한이 필요하며, 토큰은 실행마다 입력합니다. 토큰·응답 본문·추출한 세션 값은 기록하지 않습니다. 테스트 본문 자체는 계획에 저장되므로 합성 테스트 값으로 작성합니다. 자동 제어 설정은 종료·실패·중단 시 원래 값으로 복원을 시도하며, 실패하면 결과에 표시합니다. 중단된 HTTP 요청이 이미 서버에서 시작됐다면 서버 타임아웃까지 남을 수 있습니다.
-
-## 로컬 AI
-
-```bash
-ollama serve
-# qwen3:8b 모델이 설치되어 있어야 합니다.
-```
-
-화면에서 **규칙 판정 + 로컬 Ollama AI 분석**을 선택합니다. 모델은 `OLLAMA_MODEL`, 주소는 `OLLAMA_BASE_URL`로 설정합니다. AI는 검증된 후보 ID만 반환하고, 선택한 실험을 화면에서 계획에 적용할 수 있습니다. 수치·문제·원인 문장을 자유 생성해 확정하지 않습니다. AI가 없어도 실험과 규칙 판정은 동작하고, AI 실패는 구분해 표시합니다. 새 실행 스크립트는 LangSmith 외부 추적을 끕니다.
 
 ## 검증
 
